@@ -13,7 +13,7 @@ struct Counter {
 }
 
 impl Counter {
-    pub fn view(&'_ self) -> Column<'_, Message> {
+    pub fn view(&self) -> Column<'_, Message> {
         column![
             button("+").on_press(Message::Increment),
             text(self.value).size(50),
