@@ -1,4 +1,7 @@
-use iced::{widget::{button, text, Column, column}, Element};
+mod widget;
+
+use iced::{widget::{button, text, Column, column}};
+
 
 fn main() -> iced::Result {
     iced::run("A cool counter", Counter::update, Counter::view)
