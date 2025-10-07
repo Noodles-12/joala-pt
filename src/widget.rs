@@ -9,22 +9,24 @@ pub struct Add {
 
 #[derive(Debug, Clone, Copy)]
 pub enum AddMessage {
-    Percentage(f32)
+    Counter(CounterMsg),
 }
 
 impl Add {
     pub fn view(&self) -> Container<'_, AddMessage> {
         container(
-            self.counter.view().
-                
+            self.counter.view().map(|msg| { AddMessage::Counter(msg)})
         )
             .padding(20)
             .style(container::rounded_box)
-            .into()
     }
 
     pub fn update(&mut self, message: AddMessage) {
-
+        match message {
+            AddMessage::Counter(_) => {
+                println!("This is getting triggered")
+            }
+        }
     } 
 }
 
@@ -34,20 +36,20 @@ struct Counter {
 }
 
 impl Counter {
-    pub fn view(&self) -> Column<'_, Message> {
+    pub fn view(&self) -> Element<'_, CounterMsg> {
         column![
-            button("+").on_press(Message::Increment),
+            button("+").on_press(CounterMsg::Increment),
             text(self.value).size(50),
-            button("-").on_press(Message::Decrement),
-        ]
+            button("-").on_press(CounterMsg::Decrement),
+        ].into()
     }
 
-    pub fn update(&mut self, message: Message) {
+    pub fn update(&mut self, message: CounterMsg) {
         match message {
-            Message::Increment => {
+            CounterMsg::Increment => {
                 self.value += 1;
             }
-            Message::Decrement => {
+            CounterMsg::Decrement => {
                 self.value -= 1;
             }
         }
@@ -55,7 +57,7 @@ impl Counter {
 }
 
 #[derive(Debug, Clone, Copy)]
-pub enum Message {
+pub enum CounterMsg {
     Increment,
     Decrement,
 }
