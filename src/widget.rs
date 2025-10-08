@@ -1,6 +1,6 @@
 use iced::widget::{container, Container};
 use iced::Element;
-use iced::{widget::{button, text, Column, column}};
+use iced::{widget::{button, text, column}};
 
 #[derive(Default)]
 pub struct Add {
@@ -15,7 +15,7 @@ pub enum AddMessage {
 impl Add {
     pub fn view(&self) -> Container<'_, AddMessage> {
         container(
-            self.counter.view().map(|msg| { AddMessage::Counter(msg)})
+            self.counter.view().map(move |msg| { AddMessage::Counter(msg)})
         )
             .padding(20)
             .style(container::rounded_box)
@@ -23,8 +23,8 @@ impl Add {
 
     pub fn update(&mut self, message: AddMessage) {
         match message {
-            AddMessage::Counter(_) => {
-                println!("This is getting triggered")
+            AddMessage::Counter(msg) => {
+                self.counter.update(msg);
             }
         }
     } 
