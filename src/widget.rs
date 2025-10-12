@@ -1,5 +1,5 @@
 use iced::alignment::{Horizontal, Vertical};
-use iced::widget::{container, scrollable, Container};
+use iced::widget::{container, Container};
 use iced::{Element, Length};
 use iced::{widget::{button, text, column, row}};
 
@@ -7,7 +7,7 @@ static BOX_SIZE: u32 = 160;
 
 #[derive(Default)]
 pub struct Add {
-    counter: Counter,
+    pub counter: Counter,
 }
 
 #[derive(Debug, Clone, Copy)]
@@ -44,17 +44,17 @@ impl Add {
     } 
 }
 
-#[derive(Debug, Clone, Copy)]
-pub enum GridMsg {
-
-}
-
 #[derive(Default)]
-struct Counter {
-    value: i32,
+pub struct Counter {
+    value: u32,
 }
 
 impl Counter {
+    pub fn new(count: u32) -> Self {
+        Counter {
+            value: count
+        }
+    }
     pub fn view(&self) -> Element<'_, CounterMsg> {
         println!("Testing");
         column![
@@ -83,11 +83,11 @@ pub enum CounterMsg {
 }
 
 #[derive(Default)]
-pub struct Grid {
-    
+pub struct Grid<'a> {
+    list: Vec<Element<'a, GridMsg>>
 }
 
-impl Grid {
+impl<'a> Grid<'a> {
     pub fn view(&self) {
         
     }
@@ -95,4 +95,10 @@ impl Grid {
     pub fn update(&mut self, msg: GridMsg) {
 
     }
+
+}
+
+#[derive(Debug, Clone, Copy)]
+pub enum GridMsg {
+
 }
