@@ -3,7 +3,7 @@ use iced::widget::{container, Container};
 use iced::{Element, Length};
 use iced::{widget::{button, text, column, row}};
 
-static BOX_SIZE: u32 = 160;
+static BOX_SIZE: f32 = 160.0;
 
 #[derive(Default)]
 pub struct Add {}
@@ -20,6 +20,8 @@ impl Add {
             .align_y(Vertical::Center)
         )
         .on_press(AddMessage::Add)
+        .height(Length::Fixed(BOX_SIZE))
+        .width(Length::Fixed(BOX_SIZE))
         .into()
     }
 
