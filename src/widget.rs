@@ -105,7 +105,9 @@ impl<'a> Grid<'a> {
 impl<'a> Default for Component<'a> {
     fn default() -> Self {
         Self {
-            current: container(text("Default")).into()
+            current: container(text("Default")).into(),
+            fn_cmp: Counter { value: 0 },
+            empty_cmp: Empty {},
         }
     }
 }
