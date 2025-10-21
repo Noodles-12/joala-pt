@@ -1,8 +1,8 @@
 mod widget;
 
-use widget::Add;
+use widget::Empty;
 
 fn main() -> iced::Result {
-    iced::run("A cool counter", Add::update, Add::view)
+    iced::run("A cool counter", Empty::update, Empty::view)
 }
 
