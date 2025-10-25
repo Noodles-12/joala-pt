@@ -17,17 +17,9 @@ impl Counter {
         Counter { value: 0 }
     }
     pub fn view(&self) -> Element<'static, CounterMsg> {
-        // We use a column: a simple vertical layout
         column![
-            // The increment button. We tell it to produce an
-            // `Increment` message when pressed
             button("+").on_press(CounterMsg::Increment),
-
-            // We show the value of the counter here
             text(self.value).size(50),
-
-            // The decrement button. We tell it to produce a
-            // `Decrement` message when pressed
             button("-").on_press(CounterMsg::Decrement),
         ]
         .into()

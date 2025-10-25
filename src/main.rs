@@ -1,4 +1,3 @@
-mod widget;
 mod widgets;
 
 use crate::widgets::empty::Empty;
