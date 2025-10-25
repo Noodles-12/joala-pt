@@ -13,7 +13,11 @@ pub enum EmptyMsg {
 }
 
 impl Empty {
-    pub fn view(&self) -> Element<'_, EmptyMsg> {
+    pub fn new() -> Self {
+        Empty {}
+    }
+
+    pub fn view(&self) -> Element<'static, EmptyMsg> {
         button(text("+")
             .align_x(Horizontal::Center)
             .align_y(Vertical::Center)
