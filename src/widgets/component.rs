@@ -1,24 +1,35 @@
-use iced::Element;
+use iced::widget::container;
+use iced::{Element, Length};
+
 use crate::widgets::empty::Empty;
-use crate::widgets::counter::Counter;
+use crate::widgets::counter::*;
+
+const BOX_SIZE: f32 = 160.0;
 
 #[derive(Default)]
-pub struct Component {
-    state: ComponentState,
+pub struct Component<'a> {
+    state: ComponentState<'a>,
 }
 
-impl Component {
-    fn view(&self) -> Element<'static, ComponentMsg> {
-        match self.state {
+impl<'a> Component<'a> {
+    pub fn view(&self) -> Element<'_, ComponentMsg> {
+        let content = match self.state {
             ComponentState::Empty => Empty::new().view().map(|_| ComponentMsg::Create),
-            ComponentState::Function => Counter::new().view().map(|_| ComponentMsg::Execute),
-        }
+            ComponentState::Function(cont) => cont,
+        };
+
+        container(content)
+            .width(Length::Fixed(BOX_SIZE))
+            .height(Length::Fixed(BOX_SIZE))
+            .into()
     }
 
-    fn update(&mut self, msg: ComponentMsg) {
+    pub fn update(&mut self, msg: ComponentMsg) {
         match msg {
-            ComponentMsg::Create => self.state = ComponentState::Function,
-            ComponentMsg::Execute =>  println!("Testing"),
+            ComponentMsg::Create => self.state = ComponentState::Function(Counter::new().view().map(|msg| ComponentMsg::Execute(msg))),
+            ComponentMsg::Execute(msg) =>  {
+                
+            },
         }
     }
 }
@@ -26,16 +37,15 @@ impl Component {
 #[derive(Debug, Clone, Copy)]
 pub enum ComponentMsg {
     Create,
-    Execute,
+    Execute(CounterMsg),
 }
 
-#[derive(Debug, Clone, Copy)]
-pub enum ComponentState {
+pub enum ComponentState<'a> {
     Empty,
-    Function,
+    Function(Element<'a, ComponentMsg>),
 }
 
-impl Default for ComponentState {
+impl<'a> Default for ComponentState<'a> {
     fn default() -> Self {
         Self::Empty
     }

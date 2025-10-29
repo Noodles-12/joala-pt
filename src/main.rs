@@ -1,8 +1,9 @@
 mod widgets;
 
-use crate::widgets::empty::Empty;
+use crate::widgets::component::Component;
 
 fn main() -> iced::Result {
-    iced::run("A cool counter", Empty::update, Empty::view)
+    iced::application("joala-pt", Component::update, Component::view)
+        .run()
 }
 
