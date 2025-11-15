@@ -1,38 +1,37 @@
 use iced::widget::{column, button, text};
 use iced::Element;
 
+use crate::{Action, ActionMsg};
+
 #[derive(Default)]
 pub struct Counter {
     value: i32,
-}
-
-#[derive(Debug, Clone, Copy)]
-pub enum CounterMsg {
-    Increment,
-    Decrement,
 }
 
 impl Counter {
     pub fn new() -> Self {
         Counter { value: 0 }
     }
-    pub fn view(&self) -> Element<'static, CounterMsg> {
-        column![
-            button("+").on_press(CounterMsg::Increment),
-            text(self.value).size(50),
-            button("-").on_press(CounterMsg::Decrement),
-        ]
-        .into()
-    }
 
-    pub fn update(&mut self, message: CounterMsg) {
+    pub fn update(&mut self, message: ActionMsg) {
         match message {
-            CounterMsg::Increment => {
+            ActionMsg::Increment => {
                 self.value += 1;
             }
-            CounterMsg::Decrement => {
+            ActionMsg::Decrement => {
                 self.value -= 1;
             }
         }
+    }
+}
+
+impl Action for Counter {
+    fn view(&self) -> Element<'_, ActionMsg> {
+        column![
+            button("+").on_press(ActionMsg::Increment),
+            text(self.value).size(50),
+            button("-").on_press(ActionMsg::Decrement),
+        ]
+        .into()
     }
 }
