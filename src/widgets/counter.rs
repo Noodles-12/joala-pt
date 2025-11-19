@@ -20,13 +20,14 @@ impl Counter {
             }
             ActionMsg::Decrement => {
                 self.value -= 1;
-            }
+            },
+            _ => (),
         }
     }
 }
 
 impl Action for Counter {
-    fn view(&self) -> Element<'_, ActionMsg> {
+    fn view(&self) -> Element<'static, ActionMsg> {
         column![
             button("+").on_press(ActionMsg::Increment),
             text(self.value).size(50),

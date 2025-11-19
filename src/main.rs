@@ -10,12 +10,16 @@ fn main() -> iced::Result {
 }
 
 pub trait Action {
-    fn view(&self) -> Element<'_, ActionMsg>;
+    fn view(&self) -> Element<'static, ActionMsg>;
 }
 
 #[derive(Debug, Clone, Copy)]
 pub enum ActionMsg {
+    // Counter
     Increment,
     Decrement,
+
+    // Empty
+    Add,
 }
 

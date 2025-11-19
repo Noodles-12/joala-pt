@@ -16,8 +16,18 @@ pub struct Component {
 
 impl Component {
     pub fn view(&self) -> Element<'_, ComponentMsg> {
-        todo!()
+        match &self.component {
+            Some(component) => container(component.view().map(|msg|ComponentMsg::Execute(msg)))
+                .width(Length::Fixed(BOX_SIZE))
+                .height(Length::Fixed(BOX_SIZE))
+                .into(),
+            None => container(Empty::new().view().map(|_| ComponentMsg::Create))
+                .width(Length::Fixed(BOX_SIZE))
+                .height(Length::Fixed(BOX_SIZE))
+                .into(),
+        }
     }
+
 
     pub fn update(&mut self, msg: ComponentMsg) {
         todo!()
