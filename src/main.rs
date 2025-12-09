@@ -11,6 +11,7 @@ fn main() -> iced::Result {
 
 pub trait Action {
     fn view(&self) -> Element<'static, ActionMsg>;
+    fn update(&mut self, message: ActionMsg);
 }
 
 #[derive(Debug, Clone, Copy)]

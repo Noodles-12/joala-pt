@@ -12,18 +12,6 @@ impl Counter {
     pub fn new() -> Self {
         Counter { value: 0 }
     }
-
-    pub fn update(&mut self, message: ActionMsg) {
-        match message {
-            ActionMsg::Increment => {
-                self.value += 1;
-            }
-            ActionMsg::Decrement => {
-                self.value -= 1;
-            },
-            _ => (),
-        }
-    }
 }
 
 impl Action for Counter {
@@ -34,5 +22,17 @@ impl Action for Counter {
             button("-").on_press(ActionMsg::Decrement),
         ]
         .into()
+    }
+
+    fn update(&mut self, message: ActionMsg) {
+        match message {
+            ActionMsg::Increment => {
+                self.value += 1;
+            }
+            ActionMsg::Decrement => {
+                self.value -= 1;
+            },
+            _ => (),
+        }
     }
 }
