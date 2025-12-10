@@ -1,5 +1,5 @@
 use iced::widget::{column, button, text};
-use iced::Element;
+use iced::{Element, Length};
 
 use crate::{Action, ActionMsg};
 
@@ -17,9 +17,13 @@ impl Counter {
 impl Action for Counter {
     fn view(&self) -> Element<'static, ActionMsg> {
         column![
-            button("+").on_press(ActionMsg::Increment),
-            text(self.value).size(50),
-            button("-").on_press(ActionMsg::Decrement),
+            button("+").on_press(ActionMsg::Increment)
+                .width(Length::Fixed(16.0))
+                .height(Length::Fixed(10.0)),
+            text(self.value).size(20),
+            button("-").on_press(ActionMsg::Decrement)
+                .width(Length::Fixed(16.0))
+                .height(Length::Fixed(10.0)),
         ]
         .into()
     }
