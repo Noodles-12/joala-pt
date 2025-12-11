@@ -1,5 +1,5 @@
 use iced::widget::{button, text};
-use iced::{Element};
+use iced::{Element, Length};
 use iced::alignment::{Horizontal, Vertical};
 
 use crate::{Action, ActionMsg};
@@ -18,8 +18,11 @@ impl Action for Empty {
         button(text("+")
             .align_x(Horizontal::Center)
             .align_y(Vertical::Center)
+            .size(50)
         )
         .on_press(ActionMsg::Add)
+        .width(Length::Fixed(156.0))
+        .height(Length::Fixed(156.0))
         .into()
     }
 

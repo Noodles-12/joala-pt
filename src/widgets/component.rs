@@ -19,28 +19,12 @@ impl Component {
     pub fn view(&self) -> Element<'_, ComponentMsg> {
         match &self.component {
             Some(component) => {
-                println!("Some component exists");
-                container(component.view().map(|msg|ComponentMsg::Execute(msg)))
-                    .width(Length::Fixed(BOX_SIZE))
-                    .height(Length::Fixed(BOX_SIZE))
-                    .style(|_| container::Style {
-                        border: Border{
-                            width: 1.0,
-                            color: iced::Color::BLACK,
-                            radius: Radius::default(),
-                        },
-                        ..container::Style::default()
-                    })
-                    .align_x(Horizontal::Center)
-                    .align_y(Vertical::Center)
-                    .into()
+                let comp = component.view().map(|msg| ComponentMsg::Execute(msg));
+                wrap_in_container(comp)
             },
             None => { 
-                println!("component doesn't exist");
-                container(Empty::new().view().map(|_| ComponentMsg::Create))
-                    .width(Length::Fixed(BOX_SIZE))
-                    .height(Length::Fixed(BOX_SIZE))
-                    .into()
+                let empty = Empty::new().view().map(|_| ComponentMsg::Create);
+                wrap_in_container(empty)
             }
         }
     }
@@ -66,4 +50,21 @@ impl Component {
 pub enum ComponentMsg {
     Create,
     Execute(ActionMsg),
+}
+
+fn wrap_in_container<'a>(component: Element<'a, ComponentMsg>) -> Element<'a, ComponentMsg> {
+    container(component)
+        .width(Length::Fixed(BOX_SIZE))
+        .height(Length::Fixed(BOX_SIZE))
+        .style(|_| container::Style {
+            border: Border{
+                width: 1.0,
+                color: iced::Color::BLACK,
+                radius: Radius::default(),
+            },
+            ..container::Style::default()
+        })
+        .align_x(Horizontal::Center)
+        .align_y(Vertical::Center)
+        .into()
 }
