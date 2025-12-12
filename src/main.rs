@@ -5,8 +5,7 @@ use iced::Element;
 use crate::widgets::component::Component;
 
 fn main() -> iced::Result {
-    iced::application("joala-pt", Component::update, Component::view)
-        .run()
+    iced::run(Component::update, Component::view)
 }
 
 pub trait Action {
